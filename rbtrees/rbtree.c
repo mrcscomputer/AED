@@ -59,19 +59,21 @@ void leftRotate(RBTree* t, RBNode* x){
 }
 
 void rigthRotate(RBTree* t, RBNode* y){
-  RBNode* x = y->left;
-  assert(x);
-  y->left = x->right;
+  RBNode* x = y->left;//crea x y sera el nodo izq de y
+  assert(x);//existe el nodo izquierdo? termina si es falso//necesario? creo q no, xq no estaria desbalanceado
+  y->left = x->right;//al ser girado a la derecha x ya no sera left de y, x.rigth apunta a y
+
   if(x->rigth)//se usa esto para evitar segmentation fault
-    x->right->parent = y;
-  x->parent = y->parent;
- 5   if(!x->parent)
- 4     t->root = y;
- 3   else if(x == x->parent->left)
- 2     x->parent->left = y;
- 1   else
-56     x->parent->right = y;
- 1   y->left = x;
- 2   x->parent = y;
- 3 }
-  
+    x->right->parent = y;// y apunta a x.rigth
+  x->parent = y->parent;//x e y apuntan al mismo padre
+  if(!y->parent)//y es raiz'?
+    t->root=x;//x ahora es raiz
+  else if(y==y->parent->right)//y es derecho de su padre?
+    y->parent->right=x;//x ahora es derecho de su padre
+  else 
+    y->parent->left=x;//x ahora es izq de su padre
+  x->right=y;//y apunta a x, como hijo derecho
+  y->parent=x;//x apunta a y, como padre
+}
+
+
