@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "rbtree.h"
+#include <assert.h>
 
 RBNode* createRBNode(int key){
   RBNode* newNode = malloc(sizeof(RBNode));
@@ -63,7 +64,7 @@ void rigthRotate(RBTree* t, RBNode* y){
   assert(x);//existe el nodo izquierdo? termina si es falso//necesario? creo q no, xq no estaria desbalanceado
   y->left = x->right;//al ser girado a la derecha x ya no sera left de y, x.rigth apunta a y
 
-  if(x->rigth)//se usa esto para evitar segmentation fault
+  if(x->right)//se usa esto para evitar segmentation fault
     x->right->parent = y;// y apunta a x.rigth
   x->parent = y->parent;//x e y apuntan al mismo padre
   if(!y->parent)//y es raiz'?
